@@ -271,53 +271,7 @@ for(int times = 0; times < 10; times++)
 //--------------Initializing Temperature--------------------
 
 
-/*
-	for(int i = 0; i < blocks.size(); i++)
-	{
-		if(blocks[i].getlptr() != NULL)
-		cout << blocks[i].getblock_name() << " has left child: "<< blocks[i].getlchild().getblock_name() << endl;
-		if(blocks[i].getrptr() != NULL)
-		cout << blocks[i].getblock_name() << " has right child: "<< blocks[i].getrchild().getblock_name() << endl;
-		if(blocks[i].getpptr() != NULL)
-		cout << blocks[i].getblock_name() << " has parent: " << blocks[i].getparent().getblock_name() << endl; 
 
-		
-		cout << endl;
-	}
-
-	vector<Module> test;
-
-	for(int i = 0; i < blocks.size(); i++)
-	{
-		Module temp;
-		temp.setblock_name(blocks[i].getblock_name());
-		temp.setblock_x(blocks[i].getblock_x());
-		temp.setblock_y(blocks[i].getblock_y());
-		
-		test.push_back(temp);
-		test[i].setparent(blocks[i].getpptr());
-		test[i].setlchild(blocks[i].getlptr());
-		test[i].setrchild(blocks[i].getrptr());
-	}
-
-	for(int i = 0; i < 50; i++)
-	{
-		Perturb(blocks);
-	}
-
-	for(int i = 0; i < blocks.size(); i++)
-	{
-		if(test[i].getlptr() != NULL)
-		cout << test[i].getblock_name() << " has left child: "<< test[i].getlchild().getblock_name() << endl;
-		if(test[i].getrptr() != NULL)
-		cout << test[i].getblock_name() << " has right child: "<< test[i].getrchild().getblock_name() << endl;
-		if(test[i].getpptr() != NULL)
-		cout << test[i].getblock_name() << " has parent: " << test[i].getparent().getblock_name() << endl; 
-
-		
-		cout << endl;
-	}
-*/
 
 //---------------Simulated Annealing--------------------------
 
