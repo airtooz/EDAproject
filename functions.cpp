@@ -7,15 +7,11 @@
 #include <vector>
 #include <ctime>
 #include <cmath>
-#include "parser.h"
-#include "module.h"
-#include "terminal.h"
-#include "net.h"
-#include "contour.h"
+#include "utility.h"
 
 using namespace std;
 
-void Put(vector<Module>& blocks, Module* temp, vector<Contour>& bound)
+void Put(vector<Module>& blocks, Module* temp, vector<Contour>& bound) // Putting a module on the floorplan, setting its coordinates and update the floorplan contour
 {
 	Contour* current;
 	Contour leftup;
@@ -106,14 +102,6 @@ void Put(vector<Module>& blocks, Module* temp, vector<Contour>& bound)
 			bound[bound.size()-1].setprev(&(bound[bound.size()-2]));
 			bound[bound.size()-1].setnext(after);
 			after->setprev(&(bound[bound.size()-1]));
-	
-/*			Contour* buff = &bound[0];
-			while(buff!=NULL)
-			{
-				cout << buff->getcontour_x()<<"," << buff->getcontour_y()<<endl;
-				buff = buff->getnext();
-			}
-*/
 		}
 		else
 		{
@@ -146,25 +134,12 @@ void Put(vector<Module>& blocks, Module* temp, vector<Contour>& bound)
 			bound[bound.size()-1].setprev(&(bound[bound.size()-2]));
 			bound[bound.size()-1].setnext(after);
 			after->setprev(&(bound[bound.size()-1]));
-
-/*			Contour* buff = &bound[0];
-			while(buff!=NULL)
-			{
-				cout << buff->getcontour_x()<<"," << buff->getcontour_y()<<endl;
-				buff = buff->getnext();
-			}
-*/
 		}
 		
 	}
-/*
-	cout << (*temp).getblock_name() << endl;
-	cout << (*temp).getblock_x() << endl;
-	cout << (*temp).getblock_y() << endl;
-*/
 }
 
-void Packing(vector<Module>& blocks)
+void Packing(vector<Module>& blocks) // Pack the modules in pre-order traversal order
 {
 	vector<Contour> bound;
 	Module* temp;
@@ -239,7 +214,7 @@ void Packing(vector<Module>& blocks)
 	}
 }
 
-void Insert_Mod(vector<Module>& blocks, int index)
+void Insert_Mod(vector<Module>& blocks, int index) // For the initial floorplan, insert the modules one by one forming a tree
 {
 	int choose = rand()%index;
 	int lr = rand()%2;
@@ -279,7 +254,7 @@ void Insert_Mod(vector<Module>& blocks, int index)
 		}
 	}
 }
-void Reinsert_Mod(vector<Module>& blocks, Module* inptr)
+void Reinsert_Mod(vector<Module>& blocks, Module* inptr) // A function for the permutaion "Move", by moving a block to another place of the tree.
 {
 	int choose = rand()%(blocks.size());
 	while(&blocks[choose] == inptr)
@@ -329,7 +304,7 @@ void Move(vector<Module>& blocks)
 {
 //	cout << "Choosed Moving" << endl;
 	int index = rand()%blocks.size();
-	if((blocks[index].getlptr() == NULL) && (blocks[index].getrptr() == NULL))	// Node degree 0
+	if((blocks[index].getlptr() == NULL) && (blocks[index].getrptr() == NULL))	// If Node degree 0
 	{
 		Module* temp_ptr = blocks[index].getpptr();
 		blocks[index].setparent(NULL);
@@ -347,13 +322,12 @@ void Move(vector<Module>& blocks)
 		}
 		Reinsert_Mod(blocks, &blocks[index]);
 	}
-	else if((blocks[index].getlptr() != NULL) && (blocks[index].getrptr() != NULL))// Node degree 2
+	else if((blocks[index].getlptr() != NULL) && (blocks[index].getrptr() != NULL)) // If Node degree 2
 	{
 		Module* temp = &blocks[index];
 		int lr;
 		while( ((*temp).getlptr() != NULL) || ((*temp).getrptr() != NULL) )
-		{
-//			cout << "!!" << endl;	
+		{	
 			if( ((*temp).getlptr() != NULL) && ((*temp).getrptr() != NULL) )
 			{	
 				Module* cptr;
@@ -433,10 +407,8 @@ void Move(vector<Module>& blocks)
 			cout << "Error occur at Tree Delete!!!" << endl;
 		}
 		Reinsert_Mod(blocks, temp);
-
-//		;
 	}
-	else	// Node degree 1
+	else	// If Node degree 1
 	{
 		if(blocks[index].getlptr() != NULL)
 		{
@@ -509,7 +481,7 @@ void Move(vector<Module>& blocks)
 	}
 }
 
-void Setindex(vector<Module>& blocks)
+void Setindex(vector<Module>& blocks) // A module's parent's, left child's and right child's index will be stored 
 {
 	for(int i = 0; i < blocks.size();i++)
 	{
@@ -543,7 +515,7 @@ void Initialize_Floorplan(vector<Module>& blocks)
 	Setindex(blocks);
 }
 
-void Rotate(vector<Module>& blocks)
+void Rotate(vector<Module>& blocks) // Rotate a module, just swap its width and height
 {
 //	cout << "Choosed Rotation" << endl;
 
@@ -554,7 +526,7 @@ void Rotate(vector<Module>& blocks)
 	blocks[index].setblock_h(w);
 }
 
-void Switch(vector<Module>& blocks)
+void Switch(vector<Module>& blocks) // Switch two modules place, just swap their names widths and heights
 {
 //	cout << "Choosed Switching" << endl;
 	int num1 = rand()%blocks.size();
@@ -650,10 +622,9 @@ double Count_HPWL(vector<Module>& blocks,vector<Terminal>& terminals,vector<Net>
 	}
 	return HPWL;
 }
-void Perturb(vector<Module>& blocks)
+void Perturb(vector<Module>& blocks) //	 Perturb into a neighborhood floorplan
 {
 	int op_rand = 0;
-//	cout << "Perturb into a neighborhood floorplan" << endl;
 	op_rand = (rand()%3)+1;
 
 	switch(op_rand)
@@ -671,7 +642,7 @@ void Perturb(vector<Module>& blocks)
 	}
 }
 
-double Count_Area(vector<Module>& blocks)
+double Count_Area(vector<Module>& blocks) // count area of the minimum rectangle bounding all the modules
 {
 	int x_max = 0;
 	int y_max = 0;
@@ -734,7 +705,7 @@ double Costfunc(vector<Module>& blocks, vector<Terminal>& terminals, vector<Net>
 	
 }
 
-void StoreBest(vector<Module>& Best,vector<Module>& blocks)
+void StoreBest(vector<Module>& Best,vector<Module>& blocks) // Store the currently best floorplan 
 {
 	for(int i = 0; i < blocks.size(); i++)
 	{
