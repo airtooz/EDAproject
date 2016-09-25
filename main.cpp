@@ -229,8 +229,8 @@ int main(int argc, char** argv)		// main function
 		PerturbBack(blocks,left,right,parent,width,height,name);
 	}
 
-	Anorm /= (block_num*3);
-	Wnorm /= (block_num*3);
+	Anorm /= (blocks.size()*3);
+	Wnorm /= (blocks.size()*3);
 //--------------Normalize Area and HPWL---------------------
 
 //--------------Initializing Temperature--------------------
