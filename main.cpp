@@ -32,8 +32,7 @@ int main(int argc, char** argv)		// main function
 {
 
 //-------Initial parameters-------
-for(int times = 0; times < 10; times++)
-{
+	
 	double alpha = atof(argv[1]);		// the cost function parameter
 	double Temperature;
 	double InitialP = 0.99999999999;
@@ -381,8 +380,7 @@ for(int times = 0; times < 10; times++)
    	outfile << "pause -1 'Press any key to close.'" << endl;
    	outfile.close();
 
-//---------------Draw Best Floorplan--------------------------
-}	
+//---------------Draw Best Floorplan--------------------------	
 	return 0;
 
 }
