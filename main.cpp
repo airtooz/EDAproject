@@ -7,11 +7,7 @@
 #include <vector>
 #include <ctime>
 #include <cmath>
-#include "parser.h"
-#include "module.h"
-#include "terminal.h"
-#include "net.h"
-#include "contour.h"
+#include "utility.h"
 
 using namespace std;
 void Initialize_Floorplan(vector<Module>&);
