@@ -44,8 +44,7 @@ int main(int argc, char** argv)		// main function
 
 //-------Clock Starts--------------
  
-	AlgTimer t;
-	t.Begin();
+	time_t begin = time(0);
 
 	srand(time(0));
 
@@ -349,8 +348,8 @@ int main(int argc, char** argv)		// main function
 	cout << "Resulting Wirelength is: "<<HPWL_best<< endl;
 	cout << "Deadspace is: "<<((Area_best/hardarea)-1)*100 << " %" << endl;
 //---------------Simulated Annealing--------------------------
-
-	cout <<  "Runtime is: "<<t.End() <<endl;
+	time_t end = time(0);
+	cout <<  "Runtime is: "<< (end-begin) <<endl;
 
 //---------------Draw Best Floorplan--------------------------
 
