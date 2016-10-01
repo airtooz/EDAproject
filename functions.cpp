@@ -693,14 +693,14 @@ double Costfunc(vector<Module>& blocks, vector<Terminal>& terminals, vector<Net>
 
 	if(x_max > w)
 	{
-		costw = 100*(x_max-w)/w;
+		costw = 10*(x_max-w)/w;
 	}
 	if(y_max > h)
 	{
-		costh = 100*(y_max-h)/h;
+		costh = 10*(y_max-h)/h;
 	}
 
-	cost = alpha*area/Anorm + (1-alpha)*HPWL/Wnorm + costw+ costh + 50*abs(1-(x_max/y_max));
+	cost = alpha*area/Anorm + costw+ costh + (1-alpha)*abs(1-(x_max/y_max)); // Currently don't care about wirelength optimization
 	return cost;
 	
 }
