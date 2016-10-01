@@ -7,8 +7,6 @@
 #include <vector>
 #include <ctime>
 #include <cmath>
-
-//#include "parser.h"
 #include "utility.h"
 
 using namespace std;
@@ -34,12 +32,11 @@ int main(int argc, char** argv)		// main function
 {
 
 //-------Initial parameters-------
-//for(int times = 0; times < 10; times++)
-//{
+
 	double alpha = atof(argv[1]);		// the cost function parameter
 	double Temperature;
-	double InitialP = 0.99999999;
-	double epsillon = 0.0000000001;
+	double InitialP = 0.999999;
+	double epsillon = 0.00000001;
 	double ratio = 0.85;
 	double iter_num ;
 	
@@ -268,55 +265,6 @@ int main(int argc, char** argv)		// main function
 	
 //--------------Initializing Temperature--------------------
 
-
-/*
-	for(int i = 0; i < blocks.size(); i++)
-	{
-		if(blocks[i].getlptr() != NULL)
-		cout << blocks[i].getblock_name() << " has left child: "<< blocks[i].getlchild().getblock_name() << endl;
-		if(blocks[i].getrptr() != NULL)
-		cout << blocks[i].getblock_name() << " has right child: "<< blocks[i].getrchild().getblock_name() << endl;
-		if(blocks[i].getpptr() != NULL)
-		cout << blocks[i].getblock_name() << " has parent: " << blocks[i].getparent().getblock_name() << endl; 
-
-		
-		cout << endl;
-	}
-
-	vector<Module> test;
-
-	for(int i = 0; i < blocks.size(); i++)
-	{
-		Module temp;
-		temp.setblock_name(blocks[i].getblock_name());
-		temp.setblock_x(blocks[i].getblock_x());
-		temp.setblock_y(blocks[i].getblock_y());
-		
-		test.push_back(temp);
-		test[i].setparent(blocks[i].getpptr());
-		test[i].setlchild(blocks[i].getlptr());
-		test[i].setrchild(blocks[i].getrptr());
-	}
-
-	for(int i = 0; i < 50; i++)
-	{
-		Perturb(blocks);
-	}
-
-	for(int i = 0; i < blocks.size(); i++)
-	{
-		if(test[i].getlptr() != NULL)
-		cout << test[i].getblock_name() << " has left child: "<< test[i].getlchild().getblock_name() << endl;
-		if(test[i].getrptr() != NULL)
-		cout << test[i].getblock_name() << " has right child: "<< test[i].getrchild().getblock_name() << endl;
-		if(test[i].getpptr() != NULL)
-		cout << test[i].getblock_name() << " has parent: " << test[i].getparent().getblock_name() << endl; 
-
-		
-		cout << endl;
-	}
-*/
-
 //---------------Simulated Annealing--------------------------
 
 	Packing(blocks);
@@ -340,21 +288,12 @@ int main(int argc, char** argv)		// main function
 	double CostPrev;
 	double CostNext;
 	double reject;
-/*	Perturb(blocks);
-	Packing(blocks);
 
-	Maintain(blocks,left,right,parent,width,height,name);
-	Perturb(blocks);
-	PerturbBack(blocks,left,right,parent,width,height,name);
-*/	
 	iter_num = 200;
 	double c = 10000;
 	double T_init = Temperature;
 	double Cost_delta;
-	do
-	{
-		reject = 0;
-/*	for(int t = 0; ;t++)
+	for(int t = 0; ;t++)
 	{
 		if(t == 0)
 			;
@@ -362,7 +301,7 @@ int main(int argc, char** argv)		// main function
 			Temperature = T_init*(Cost_delta/iter_num)/((t+1)*c);
 		else
 			Temperature = T_init*(Cost_delta/iter_num)/(t+1);
-		Cost_delta = 0;*/
+		Cost_delta = 0;
 		for(int i = 0; i < iter_num; i++)
 		{
 			Packing(blocks);	// Floorplan S
@@ -402,16 +341,16 @@ int main(int argc, char** argv)		// main function
 				HPWL_best = Count_HPWL(blocks,terminals,nets);
 			}
 		}
-		Temperature = ratio*Temperature;
-	/*	if(Temperature <= epsillon)
+		//Temperature = ratio*Temperature;
+		Cost_delta/=iter_num;
+		if(Temperature <= epsillon)
 		{
 			cout << "Frozen!!" << endl;
 			break;
 		}
 		if((reject/iter_num) > 0.95 )
 			break;
-	*/
-	}while((Temperature > epsillon)&&(reject/iter_num)<=0.95);	// while not frozen and rejection rate low
+	}
 
 	cout << "Best Cost is: "<<Cost_best<< endl;
 	cout << "Resulting Area is: "<<Area_best<< endl;
