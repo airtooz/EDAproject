@@ -229,7 +229,7 @@ int main(int argc, char** argv)		// main function
 	
 		Wnorm += Count_HPWL(blocks,terminals,nets);
 		Anorm += Count_Area(blocks);
-		PerturbBack(blocks,left,right,parent,width,height,name);
+		PerturbBack(blocks,left,right,parent,width,height,name); // why do perturbBack? (wlkb83)
 	}
 
 	Anorm /= (block_num*3);
@@ -347,7 +347,7 @@ int main(int argc, char** argv)		// main function
 	Perturb(blocks);
 	PerturbBack(blocks,left,right,parent,width,height,name);
 */	
-	iter_num = 200;
+	iter_num = 200; // fast-SA needs two or more iteration phases (wlkb83)
 	double c = 10000;
 	double T_init = Temperature;
 	double Cost_delta;
